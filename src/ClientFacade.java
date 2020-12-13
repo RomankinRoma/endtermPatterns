@@ -106,10 +106,10 @@ public class ClientFacade {
 
             switch (chose) {
                 case 1:
-                    register();
+                    deposit();
                     break;
                 case 2:
-                    deposit();
+
                     break;
                 case 3:
                     takeLoan();
@@ -283,10 +283,27 @@ public class ClientFacade {
             currentUser.getDepLoan().setAmount(currentUser.getDepLoan().getAmount() + amount);
         }
 
-
         System.out.println("Successful!");
     }
 
+    public void withdraw() {
+        System.out.println("Input amount:");
+        int amount = in.nextInt();
+        System.out.println("Withdraw from:");
+        System.out.println("1.Master account");
+        System.out.println("2.Deposit account");
+        int chose = in.nextInt();
+        if (chose == 1 && currentUser.getAmount()>amount) {
+            currentUser.setAmount(currentUser.getAmount() - amount);
+            System.out.println("Successful!");
+        } else if (chose == 2 && currentUser.getDepLoan().getAmount()>amount && currentUser.getDepLoan().isDeposit()) {
+            currentUser.getDepLoan().setAmount(currentUser.getDepLoan().getAmount() - amount);
+            System.out.println("Successful!");
+        } else if (chose == 2 && currentUser.getDepLoan2().getAmount()>amount && currentUser.getDepLoan2().isDeposit()) {
+        currentUser.getDepLoan().setAmount(currentUser.getDepLoan2().getAmount() - amount);
+        System.out.println("Successful!");
+    }
+    }
     public void checkUsername(String username) {
         for (Account account : users) {
             if (account.getUsername().equals(username)) {
